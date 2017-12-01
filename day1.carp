@@ -1,0 +1,28 @@
+(use Int)
+
+(defn intify [c]
+  (- (Char.to-int @c) 48))
+
+(defn zero-to-nine [i]
+  (and (< @i 10) (> @i -1)))
+
+(defn get-ints [s]
+  (Array.filter zero-to-nine (Array.copy-map intify &(String.chars &s))))
+
+(defn solve [inpt]
+  (let [sum 0]
+    (do
+      (for [i 0 (dec (Array.count inpt))]
+        (if (= @(Array.nth inpt i) @(Array.nth inpt (inc i)))
+          (set! &sum (+ sum @(Array.nth inpt i)))
+          ()))
+      ; special case: last
+      (if (= (Array.first inpt) (Array.last inpt))
+        (set! &sum (+ sum (Array.first inpt)))
+        ())
+      sum)))
+
+(defn main []
+  (let [inpt (get-ints (IO.read-file "day1"))]
+  (do
+    (IO.println &(str (solve &inpt))))))
