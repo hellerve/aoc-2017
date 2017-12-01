@@ -13,7 +13,7 @@
   (let [sum 0 size (Array.count inpt)]
     (do
       (for [i 0 size]
-        (if (= @(Array.nth inpt i) @(Array.nth inpt (mod (inc i) size)))
+        (if (= @(Array.nth inpt i) @(Array.nth inpt (mod (+ i (/ size 2)) size)))
           (set! &sum (+ sum @(Array.nth inpt i)))
           ()))
       sum)))
