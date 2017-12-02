@@ -1,0 +1,8 @@
+(define (sum-line line)
+  (let ((l (map string->integer (regex:split r/\s+/ line))))
+    (- (list:max l) (list:min l))))
+
+(define (chk lines)
+  (apply sum (map sum-line lines)))
+
+(write (chk (string:split (read-contents "day2") #\newline)))

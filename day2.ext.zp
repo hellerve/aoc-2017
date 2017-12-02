@@ -1,0 +1,21 @@
+(define (find-in-line line)
+  (define (find-even-division acc el)
+    (let ((fst (car el))
+          (snd (cadr el)))
+      (cond
+        ((truthy? acc) acc)
+        ((and (/= fst snd)
+              (eq? (/ fst snd) (/. fst snd)))
+          (/ fst snd))
+        (else acc))))
+  (define (find-in-line-internal l)
+    (reduce find-even-division nil
+            (reduce ++ [] (map ($ (map (lambda (x) (list x %)) l)) l))))
+
+  (let ((l (map string->integer (regex:split r/\s+/ line))))
+    (find-in-line-internal l)))
+
+(define (chk lines)
+  (apply sum (map find-in-line lines)))
+
+(write (chk (string:split (read-contents "day2") #\newline)))
