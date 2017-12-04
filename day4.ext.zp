@@ -1,0 +1,12 @@
+; painfully inefficient but elegant
+(define (is-anagram words phrase)
+  (let ((phrase (sort:sort (string->list phrase))))
+    (any? (curry eq? phrase) (map (compose sort:sort string->list) words))))
+
+(define (validate phrase)
+  (let ((words (string:split phrase #\space)))
+    (and (all? string:lower? words)
+         (all? ($ (not (is-anagram (list:remove words %) %))) words))))
+
+(let ((inpt (string:split (read-contents "day4") #\newline)))
+  (write (length (filter validate inpt))))

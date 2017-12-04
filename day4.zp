@@ -1,0 +1,7 @@
+(define (validate phrase)
+  (let ((words (string:split phrase #\space)))
+    (and (all? string:lower? words)
+         (all? ($ (not (in? (list:remove words %) %))) words))))
+
+(let ((inpt (string:split (read-contents "day4") #\newline)))
+  (write (length (filter validate inpt))))
