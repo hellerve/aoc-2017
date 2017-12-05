@@ -1,0 +1,21 @@
+(use Array)
+(use IO)
+(use String)
+(use Int)
+
+(defn main []
+  (let [input (read-file "day5")
+        ls (lines input)
+        numbers (copy-map from-string &ls)
+        len (count &numbers)
+        where 0
+        nsteps 0]
+    (do
+      (while (and (> where -1) (< where len))
+        (let [tmp where]
+          (do
+            (set! &where (+ where @(nth &numbers where)))
+            (aset! &numbers tmp (inc @(nth &numbers tmp)))
+            (set! &nsteps (inc nsteps)))))
+      (IO.println &(Int.str nsteps)))))
+
